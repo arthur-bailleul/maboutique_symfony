@@ -39,4 +39,7 @@ return [
         'version' => '7.2.0',
         'type' => 'css',
     ],
+    'jquery' => [
+        'version' => '4.0.0',
+    ],
 ];

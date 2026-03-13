@@ -4,74 +4,121 @@
 on est toujours dans index.php
 c'est pareil avec base.html.twig.
  #}
+	{% block title %}
+Hello BonjourController!
+{% endblock %}
 
-{% block title %}Hello BonjourController!{% endblock %}
-
-{% block nav %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar scroll</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Link</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-
+	{% block nav %}
+		<nav class="navbar navbar-expand-lg bg-body-tertiary"> <div class="container-fluid">
+			<a class="navbar-brand" href="#">Navbar scroll</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarScroll">
+				<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Link</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Link
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="#">Action</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Another action</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item" href="#">Something else here</a>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link disabled" aria-disabled="true">Link</a>
+					</li>
+				</ul>
+				<form class="d-flex" role="search">
+					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
+			</div>
+		</div>
+	</nav>
 
 
 {% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+	.example-wrapper {
+		margin: 1em auto;
+		max-width: 800px;
+		width: 95%;
+		font: 18px / 1.5 sans-serif;
+	}
+	.example-wrapper code {
+		background: #F5F5F5;
+		padding: 2px 6px;
+	}
 </style>
 
 <i class="fa-solid fa-cart-arrow-down"></i>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/laragon/www/maboutique/src/Controller/BonjourController.php</code></li>
-        <li>Your template at <code>C:/laragon/www/maboutique/templates/bonjour/index.html.twig</code></li>
-    </ul>
+    <a href="{{ path('app_twig_test')}}">twig</a>
+
+	<h1>Hello
+		{{ controller_name }}! ✅</h1>
+
+	This friendly message is coming from:
+	<ul>
+		<li>Your controller at
+			<code>C:/laragon/www/maboutique/src/Controller/BonjourController.php</code>
+		</li>
+		<li>Your template at
+			<code>C:/laragon/www/maboutique/templates/bonjour/index.html.twig</code>
+		</li>
+	</ul>
 </div>
+<p>If you click on the "Hide" button, I will disappear.</p>
+<button id="hide">Hide</button>
+<button id="show">Show</button>
 
-{% block toto2 %} je suis bonjour.html.twig {% endblock %}
-{# {% block toto %} j'ai reecris toto de base {% endblock %} #}
+<script type="module">
+	import $ from 'jquery';
 
-// Todo: faire une macro pour block
+$(document).ready(function () {
+$("#hide").click(function () {
+$("p").hide();
+});
+$("#show").click(function () {
+$("p").show();
+});
+});
+</script>
 
-
+{% block toto2 %}
+	je suis bonjour.html.twig
 {% endblock %}
 
+
+{% block twig %}
+
+	{% if age > 18 %}
+		<p>tu es majeur</p>
+	{% else %}
+		<p>tu es mineur</p>
+	{% endif %}
+
+{% endblock %}
+{# {% block toto %} j'ai reecris toto de base {% endblock %} #}
+
+	// Todo: faire une macro pour block
+{% endblock %}

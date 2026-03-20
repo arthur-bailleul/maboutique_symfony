@@ -25,8 +25,9 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
-    'bootstrap' => [
-        'version' => '5.3.8',
+    '@fortawesome/fontawesome-free/css/all.css' => [
+        'version' => '7.2.0',
+        'type' => 'css',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
@@ -35,11 +36,7 @@ return [
         'version' => '5.3.8',
         'type' => 'css',
     ],
-    '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '7.2.0',
-        'type' => 'css',
-    ],
-    'jquery' => [
-        'version' => '4.0.0',
+    'bootstrap' => [
+        'version' => '5.3.8',
     ],
 ];

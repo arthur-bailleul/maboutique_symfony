@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+
+	<h1>Inscription d'un compte</h1>
+
+{# Print data #}
+{# <pre> #}
+{# {{dump(form)}} #}
+{# </pre> #}
+
+{{ form_start(form) }}
+
+<div class="container w-20 xl-col-12 sm-col-3">
+
+    <div class="row">
+            {{ form_row(form.email, {'label':'identifiant', 'attr': { 'placeholder':'Entrer email', 'type':'email' } }) }}
+            {{ form_row(form.firstName) }}
+            {{ form_row(form.lastName) }}
+            {{ form_row(form.password) }}
+            {{ form_row(form.confirm_password) }}
+            {{ form_row(form.submit) }}
+            {# {{ form_label(form.email) }} #}
+            {# {{ form_row(form.email, {'label':false, 'attr': { 'placeholder':'Entrer email' } }) }} #}
+
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}

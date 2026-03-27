@@ -51,3 +51,18 @@ import 'bootstrap';
 
 
 symfony console importmap:require @fortawesome/fontawesome-free/css/all.css@7.2.0
+
+// Ajout du form de login + logout
+symfony console make:security:form-logi
+
+
+composer require symfony/rate-limiter
+
+
+
+symfony console make:controller Account
+symfony console make:controller AccountPasswor
+
+
+symfony console make:form ChangePasswor
+User

@@ -9,7 +9,7 @@
       <ul class="navbar-nav">
 
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+          <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Accueil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{path('register')}}">Inscription</a>
@@ -21,17 +21,59 @@
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
         </li>
       </ul>
+
       <ul class="navbar-nav ms-auto">
+
+        {% if not app.user %}
+
         <li class="nav-item">
             <a class="nav-link active" href="{{ path('register') }}">Inscription</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="{{path('login')}}">Connexion</a>
         </li>
+
+        {% else %}
+
         <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          <a class="nav-link text-danger" href="{{logout_path()}}">Deconnexion</a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('account')}}">Compte</a>
+        </li>
+
+        {% endif %}
+
+
       </ul>
     </div>
   </div>
 </nav>
+
+{# TODO: Ne rien mettre apres un dump sinon ca s'execute pas  #}
+{# <pre> #}
+    {# {{dump(app.flashes)}} #}
+{# </pre> #}
+
+{# <pre> #}
+    {# {{dump(app)}} #}
+{# </pre> #}
+
+<div class="row justify-content-center">
+
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label }} alert-dismissible fade show col-md-auto" role="alert">
+          <strong>{{ label|upper }}!</strong>
+
+                {% for message in messages %}
+                <div class="flash-notice">
+                    {{ message }}
+                </div>
+                {% endfor %}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+</div>

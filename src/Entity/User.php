@@ -7,8 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity('email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -16,7 +22,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(
+        message:"{{ label }} est {{ value }}",
+        groups:['registration']
+    )]
+    // #[Assert\NotBlank(message:"aaa {{ value }}, {{ label }} aaa")]
+    // ne jamais toucher l'ORM!!!!
+    #[ORM\Column]
+    #[Assert\Email(
+        message: "{{ label }} n'est pas valide",
+    )]
     private ?string $email = null;
 
     /**
@@ -28,14 +43,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    #[Assert\NotBlank(
+        message:"{{ label }} est {{ value }}",
+        groups:['registration']
+    )]
     #[ORM\Column]
+    #[Assert\Regex(
+        pattern: "#(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}#",
+        match: false,
+        message: '{{ label }} doit contenir au moins 1 chiffres, 1 lettre minuscule, 1 majuscule'
+    )]
     private ?string $password = null;
+
+    #[Assert\NotBlank(message:"{{ label }} est {{ value }}")]
+    #[Assert\EqualTo(
+        propertyPath: 'password',
+        message: "{{ label }} doit etre egale a {{ compared_value }}",
+        groups:['registration']
+    )]
     private ?string $confirm_password = null;
 
+    // CHANGE PASSWORD
+
+    #[Assert\NotBlank(
+        message:"{{ label }} est {{ value }}",
+        groups:['changePassword']
+    )]
+    private ?string $oldPassword = null;
+
+    #[Assert\NotBlank(
+        message:"{{ label }} est {{ value }}",
+        groups:['changePassword']
+    )]
+    private ?string $newPassword = null;
+
+    #[Assert\EqualTo(
+        propertyPath: 'newPassword',
+        message: "{{ label }} doit etre egale a {{ compared_value }}"
+    )]
+    #[Assert\NotBlank(
+        message:"{{ label }} est {{ value }}",
+        groups:['changePassword']
+    )]
+    private ?string $confirmNewPassword = null;
+
+
+
+    #[Assert\NotBlank(message:"{{ label }} est {{ value }}")]
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
+    #[Assert\NotBlank(message:"{{ label }} est {{ value }}")]
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 3,
+        max: 20,
+        minMessage: "Mettez un {{ label }} de plus de 2 caracteres",
+        maxMessage: "Mettez un {{ label }} moins de 21 caracteres"
+    )]
     private ?string $firstName = null;
 
     public function getId(): ?int
@@ -102,6 +167,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    // CONFIRM PASSWORD
+
     public function getConfirmPassword(): ?string
     {
         return $this->confirm_password;
@@ -110,6 +177,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirmPassword(string $confirm_password): static
     {
         $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
+    // OLD PASSWORD
+
+    public function getOldPassword(): ?string
+    {
+        return $this->oldPassword;
+    }
+
+    public function setOldPassword(string $password): static
+    {
+        $this->oldPassword = $password;
+
+        return $this;
+    }
+
+    // NEW PASSWORD
+
+    public function getNewPassword(): ?string
+    {
+        return $this->newPassword;
+    }
+
+    public function setNewPassword(string $password): static
+    {
+        $this->newPassword = $password;
+
+        return $this;
+    }
+
+    // CONFIRM NEW PASSWORD
+
+    public function getConfirmNewPassword(): ?string
+    {
+        return $this->confirmNewPassword;
+    }
+
+    public function setConfirmNewPassword(string $password): static
+    {
+        $this->confirmNewPassword = $password;
 
         return $this;
     }

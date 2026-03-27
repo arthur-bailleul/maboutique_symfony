@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+
+<h1>Mon compte</h1>
+
+<p>Bienvenue {{ app.user.firstname }} {{ app.user.lastname }}</p>
+<hr>
+
+<a href="{{ path('changePassword') }}">Modifier le mot de passe</a><br>
+- Ajouter des adresses<br>
+- Mes commandes<br>
+
+{% endblock %}

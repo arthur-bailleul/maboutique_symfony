@@ -51,6 +51,22 @@ final class RegisterController extends AbstractController
             $this->manager->persist($user);
             $this->manager->flush();
 
+
+            // $this->addFlash(
+            //     'notice',
+            //     'Your changes were noticed!'
+            // );
+
+            $this->addFlash(
+                'success',
+                'Votre compte a bien ete cree!'
+            );
+
+            // $this->addFlash(
+            //     'danger',
+            //     'Your changes were in danger!'
+            // );
+
             return $this->redirectToRoute('home');
         }
 

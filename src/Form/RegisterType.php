@@ -18,22 +18,26 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('email', TextType::class, [
-                'required' => false
+                'required' => false // TODO: evite d'avoir le html qui gene pour le teste
             ])
             // ->add('roles')
             -> add('firstName', TextType::class, [
                 'label' => 'Prenom',
+                'required' => false,
                 'attr' => ['placeholder' => 'Entrer le prenom']])
             -> add('lastName', TextType::class, [
                 'label' => 'Nom',
+                'required' => false,
                 'attr' => ['placeholder' => 'Entrer le nom']
             ])
             -> add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
+                'required' => false,
                 'attr' => ['placeholder' => 'Entrer un mot de passe']
             ])
             -> add('confirm_password', PasswordType::class, [
                 'label' => 'Confirme mot de passe',
+                'required' => false,
                 'attr' => ['placeholder' => 'Confirmer le mot de passe']
             ])
             -> add('submit', SubmitType::class, [
@@ -47,6 +51,7 @@ class RegisterType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['registration'],
         ]);
     }
 }

@@ -44,18 +44,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[Assert\NotBlank(
-        message:"{{ label }} est {{ value }}",
+        message:"PASSWORD: {{ label }} est {{ value }}",
         groups:['registration']
     )]
     #[ORM\Column]
     #[Assert\Regex(
         pattern: "#(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}#",
         match: false,
-        message: '{{ label }} doit contenir au moins 1 chiffres, 1 lettre minuscule, 1 majuscule'
+        message: '{{ label }} doit contenir au moins 1 chiffres, 1 lettre minuscule, 1 majuscule',
+        groups:['registration']
     )]
     private ?string $password = null;
 
-    #[Assert\NotBlank(message:"{{ label }} est {{ value }}")]
+    #[Assert\NotBlank(
+        message:"CONFIRM PASSWORD: {{ label }} est {{ value }}",
+        groups:['registration']
+    )]
     #[Assert\EqualTo(
         propertyPath: 'password',
         message: "{{ label }} doit etre egale a {{ compared_value }}",
@@ -66,40 +70,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // CHANGE PASSWORD
 
     #[Assert\NotBlank(
-        message:"{{ label }} est {{ value }}",
+        message:"OLD PASSWORD: {{ label }} est {{ value }}",
         groups:['changePassword']
     )]
     private ?string $oldPassword = null;
 
     #[Assert\NotBlank(
-        message:"{{ label }} est {{ value }}",
+        message:"NEW PASSWORD: {{ label }} est {{ value }}",
         groups:['changePassword']
     )]
     private ?string $newPassword = null;
 
     #[Assert\EqualTo(
         propertyPath: 'newPassword',
-        message: "{{ label }} doit etre egale a {{ compared_value }}"
+        message: "{{ value }} doit etre egale a {{ compared_value }}",
+        groups:['changePassword']
     )]
     #[Assert\NotBlank(
-        message:"{{ label }} est {{ value }}",
+        message:"CONFIRM PASSWORD: {{ label }} est {{ value }}",
         groups:['changePassword']
     )]
     private ?string $confirmNewPassword = null;
 
 
 
-    #[Assert\NotBlank(message:"{{ label }} est {{ value }}")]
+    #[Assert\NotBlank(message:"NOM: {{ label }} est {{ value }}")]
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[Assert\NotBlank(message:"{{ label }} est {{ value }}")]
+    #[Assert\NotBlank(
+        message:"PRENOM: {{ label }} est {{ value }}",
+        groups:['registration']
+    )]
     #[ORM\Column(length: 255)]
     #[Assert\Length(
         min: 3,
         max: 20,
         minMessage: "Mettez un {{ label }} de plus de 2 caracteres",
-        maxMessage: "Mettez un {{ label }} moins de 21 caracteres"
+        maxMessage: "Mettez un {{ label }} moins de 21 caracteres",
     )]
     private ?string $firstName = null;
 

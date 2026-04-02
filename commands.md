@@ -66,3 +66,9 @@ symfony console make:controller AccountPasswor
 
 symfony console make:form ChangePasswor
 User
+
+composer require easycorp/easyadmin-bundle:^4.*
+symfony console make:admin:dashboard
+
+
+console make:admin:crud

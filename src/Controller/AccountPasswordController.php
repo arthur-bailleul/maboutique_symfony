@@ -43,14 +43,33 @@ final class AccountPasswordController extends AbstractController
             $password = $user->getOldPassword();
 
             if (!$this->passwordHasher->isPasswordValid($user, $password)) {
-                dd('old mdp incorrect');
+                $this->addFlash(
+                    'danger',
+                    "l'ancien mot de passe est incorrect"
+                );
+                // dd('old mdp incorrect');
+                return $this->redirectToRoute('changePassword');
             } else {
-                dd('old mdp correct');
+                $newPassword = $user->getNewPassword();
+                $hashedPassword = $this->passwordHasher->hashPassword($user, $newPassword );
+                $user->setPassword($hashedPassword);
+
+                // permet d'ajouter * objets dans la db d'un coup
+                $this->manager->persist($user);
+                $this->manager->flush();
+                // dd('old mdp correct');
+
+                $this->addFlash(
+                    "success",
+                    "votre mot de passe a bien ete modifier"
+                );
+                return $this->redirectToRoute('account');
             }
 
 
             // return $this->redirectToRoute('home');
         }
+
         // dd('after if');
 
         return $this->render('account/account_password.html.twig', [

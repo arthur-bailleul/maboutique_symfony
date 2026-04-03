@@ -31,6 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\Email(
         message: "{{ label }} n'est pas valide",
+        groups: ['changePassword']
     )]
     private ?string $email = null;
 
@@ -56,10 +57,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
-    #[Assert\NotBlank(
-        message:"CONFIRM PASSWORD: {{ label }} est {{ value }}",
-        groups:['registration']
-    )]
     #[Assert\EqualTo(
         propertyPath: 'password',
         message: "{{ label }} doit etre egale a {{ compared_value }}",

@@ -72,3 +72,14 @@ symfony console make:admin:dashboard
 
 
 console make:admin:crud
+
+console make:admin:crud
+
+symfony console make:entity
+
+
+symfony console make:migration
+
+symfony console doctrine:migrations:migrate
+
+symfony console make:admin:crud

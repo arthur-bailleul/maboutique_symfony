@@ -1,16 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccountController!{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
 
-<h1>Mon compte</h1>
+<div class="container py-5" style="max-width: 600px;">
 
-<p>Bienvenue {{ app.user.firstname }} {{ app.user.lastname }}</p>
-<hr>
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
 
-<a href="{{ path('changePassword') }}">Modifier le mot de passe</a><br>
-- Ajouter des adresses<br>
-- Mes commandes<br>
+            <h2 class="mb-3">Mon compte</h2>
+
+            <p class="text-muted mb-4">
+                Bienvenue <strong>{{ app.user.firstname }} {{ app.user.lastname }}</strong>
+            </p>
+
+            <hr>
+
+            <div class="list-group list-group-flush mt-3">
+                <a href="{{ path('changePassword') }}" class="list-group-item list-group-item-action">
+                    🔒 Modifier le mot de passe
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action">
+                    📍 Gérer mes adresses
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action">
+                    📦 Mes commandes
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

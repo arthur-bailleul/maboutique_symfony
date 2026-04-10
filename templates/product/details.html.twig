@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block body %}
+
+<div class="container py-5">
+
+  <div class="row g-5 align-items-start">
+
+    <!-- IMAGE -->
+    <div class="col-md-6">
+      <div class="ratio ratio-1x1 bg-light rounded-4 shadow overflow-hidden">
+        <img src="/uploads/{{ product.image }}"
+             class="w-100 h-100 object-fit-cover"
+             alt="{{ product.name }}">
+      </div>
+    </div>
+
+    <!-- INFOS -->
+    <div class="col-md-6">
+
+      <!-- Nom -->
+      <h1 class="fw-semibold mb-2">
+        {{ product.name }}
+      </h1>
+
+      <!-- Sous-titre -->
+      {% if product.subtitle %}
+        <p class="text-muted mb-3">
+          {{ product.subtitle }}
+        </p>
+      {% endif %}
+
+      <!-- PRIX (IMPORTANT) -->
+      <div class="mb-3">
+        <span class="badge bg-dark fs-6 px-3 py-2 rounded-3">
+          {{ product.price is defined ? product.price : '0' }} €
+        </span>
+      </div>
+
+      <hr>
+
+      <!-- DESCRIPTION -->
+      <div class="mb-4">
+        <h6 class="fw-semibold">Description</h6>
+        <p class="text-secondary mb-0">
+          {{ product.description ?: 'Aucune description disponible.' }}
+        </p>
+      </div>
+
+
+      <!-- ACTIONS -->
+      <div class="d-flex gap-2">
+
+        <a href="{{ path('products') }}"
+           class="btn btn-outline-dark rounded-3">
+          ← Retour
+        </a>
+
+        <button class="btn btn-dark rounded-3 flex-grow-1">
+          Ajouter au panier
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

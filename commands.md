@@ -83,3 +83,9 @@ symfony console make:migration
 symfony console doctrine:migrations:migrate
 
 symfony console make:admin:crud
+
+
+
+composer require stof/doctrine-extensions-bundle
+
+symfony console doctrine:fixtures:loa

@@ -11,8 +11,17 @@
     <h1 class="h3 mb-0 fw-semibold">Nos Produits</h1>
   </div>
 
+
+
   <!-- Grid -->
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<div class="row">
+    <div class="col-md-3">Filtre
+    {{ form(form)}}
+    </div>
+    <div class="col-md-9">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+
 
     {% for product in products %}
 
@@ -45,7 +54,9 @@
 
             <!-- CTA -->
             {# <a href="{{ path('product', product.id)}}" #}
-            <a href="/nos-produits/{{ product.id }}"
+            {# <a href="/nos-produits/{{ product.id }}" #}
+            {# <a href="/produit/{{ product.slug }}" #}
+            <a href="{{path('product', {'slug': product.slug })}}"
                class="btn btn-outline-dark btn-sm mt-3 w-100 rounded-3">
               Voir détails
             </a>
@@ -57,6 +68,8 @@
 
     {% endfor %}
 
+        </div>
+    </div>
   </div>
 
 </div>

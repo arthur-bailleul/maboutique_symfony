@@ -34,7 +34,7 @@ class ProductCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('name')->setLabel('Nom'),
             // TextEditorField::new('description'),
-            SlugField::new('slug')->setTargetFieldName('name'),
+            // SlugField::new('slug')->setTargetFieldName('name'),
             ImageField::new('image')->setBasePath('uploads/')->setUploadDir('public/uploads/')->setFileConstraints(new Image(maxSize: '100m', mimeTypes: ['image/png', 'image/jpeg', 'image/webp']))->setRequired($pageName === Crud::PAGE_NEW),
             TextField::new('subtitle')->setLabel('Sous-titre'),
             // TextareaField::new('description'),

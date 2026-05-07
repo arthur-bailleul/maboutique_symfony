@@ -31,6 +31,7 @@ class ProductRepository extends ServiceEntityRepository
     //        ;
     //    }
 
+
     //    public function findOneBySomeField($value): ?Product
     //    {
     //        return $this->createQueryBuilder('p')
@@ -40,4 +41,13 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+       public function findByCategory($value): ?Product
+       {
+           return $this->createQueryBuilder('p')
+               ->andWhere('p.category= :val')
+               ->setParameter('val', $value)
+               ->getQuery()
+               ->getOneOrNullResult()
+           ;
+       }
 }

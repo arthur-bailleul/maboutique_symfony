@@ -48,11 +48,12 @@ class ProductsFixtures extends Fixture implements DependentFixtureInterface
 
             $product = new Product()
                 ->setName($faker->words(3, true))
+                // ->setName($faker->words(3, true))
                 ->setCategory($category)
                 ->setPrice($faker->numberBetween(1, 1500))
                 ->setSubtitle($faker->words(2, true))
                 ->setImage($faker->picsum("C:\laragon\www\maboutique\public\uploads", $width = 640, $height = 480, $fullPath = false, $id = null, $randomize = true, $gray = false, $blur = null, $imageExtension = "jpg"))
-                ->setSlug($faker->slug())
+                // ->setSlug($faker->slug())
                 ->setDescription($faker->paragraphs(5, true));
 
             // $hashedPassword = $this->passwordHasher->hashPassword($user, 'user'.$i);

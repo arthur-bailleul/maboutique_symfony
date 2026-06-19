@@ -122,6 +122,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: 'user')]
     private Collection $orders;
 
+    #[ORM\Column(options: ['default' => false])]
+    private bool $isActive = false;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $activationToken = null;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -345,6 +351,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(?string $activationToken): static
+    {
+        $this->activationToken = $activationToken;
 
         return $this;
     }

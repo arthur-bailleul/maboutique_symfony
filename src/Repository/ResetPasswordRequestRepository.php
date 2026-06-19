@@ -6,27 +6,29 @@ use App\Entity\ResetPasswordRequest;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
-use SymfonyCasts\Bundle\ResetPassword\Persistence\Repository\ResetPasswordRequestRepositoryTrait;
-use SymfonyCasts\Bundle\ResetPassword\Persistence\ResetPasswordRequestRepositoryInterface;
 
 /**
  * @extends ServiceEntityRepository<ResetPasswordRequest>
  */
-class ResetPasswordRequestRepository extends ServiceEntityRepository implements ResetPasswordRequestRepositoryInterface
+class ResetPasswordRequestRepository extends ServiceEntityRepository
 {
-    use ResetPasswordRequestRepositoryTrait;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ResetPasswordRequest::class);
     }
 
-    /**
-     * @param User $user
-     */
-    public function createResetPasswordRequest(object $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken): ResetPasswordRequestInterface
+    public function findByToken(string $token): ?ResetPasswordRequest
     {
-        return new ResetPasswordRequest($user, $expiresAt, $selector, $hashedToken);
+        return $this->findOneBy(['token' => $token]);
+    }
+
+    public function removeAllForUser(User $user): void
+    {
+        $this->createQueryBuilder('r')
+            ->delete()
+            ->where('r.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->execute();
     }
 }

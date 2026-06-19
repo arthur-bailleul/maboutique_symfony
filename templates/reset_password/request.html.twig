@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block body %}
+<div class="container py-5" style="max-width: 600px;">
+
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('login') }}" class="text-decoration-none text-dark">Connexion</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Réinitialisation</li>
+        </ol>
+    </nav>
+
+    {# Flash Errors #}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger border-0 shadow-sm rounded-3 mb-3" role="alert">
+            🛑 {{ flash_error }}
+        </div>
+    {% endfor %}
+
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
+        <div class="card-body p-4 p-md-5">
+            <h2 class="h3 fw-semibold mb-2">Mot de passe oublié ?</h2>
+            <p class="text-muted small mb-4">
+                Entrez votre adresse e-mail ci-dessous. Nous vous enverrons un lien sécurisé pour réinitialiser vos identifiants.
+            </p>
+
+            <hr class="text-muted opacity-25 mb-4">
+
+            {{ form_start(requestForm) }}
+                <div class="mb-4">
+                    {{ form_label(requestForm.email, 'Votre adresse e-mail', {'label_attr': {'class': 'form-label small fw-medium'}}) }}
+                    {{ form_widget(requestForm.email, {'attr': {'class': 'form-control rounded-3', 'placeholder': 'exemple@domaine.com'}}) }}
+                    {{ form_errors(requestForm.email) }}
+                </div>
+
+                <button class="btn btn-dark btn-sm w-100 rounded-3 py-2 fw-medium">
+                    Envoyer le lien de récupération
+                </button>
+            {{ form_end(requestForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

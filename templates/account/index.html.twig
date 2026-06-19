@@ -6,7 +6,14 @@
 
 <div class="container py-5" style="max-width: 600px;">
 
-    <div class="card shadow-sm border-0">
+    <!-- Fil d'ariane pour revenir facilement au compte -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Mon compte</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow border-0">
         <div class="card-body">
 
             <h2 class="mb-3">Mon compte</h2>
@@ -22,7 +29,7 @@
                     🔒 Modifier le mot de passe
                 </a>
 
-                <a href="#" class="list-group-item list-group-item-action">
+                <a href="{{ path('account_address') }}" class="list-group-item list-group-item-action">
                     📍 Gérer mes adresses
                 </a>
 

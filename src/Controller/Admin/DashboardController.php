@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Carrier;
 use App\Entity\User;
 
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
@@ -53,5 +54,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(AdminCrudController::class, 'Admin', 'fas fa-user')->setAction(Action::INDEX);
         yield MenuItem::linkTo(CategoryCrudController::class, 'Category', 'fas fa-table-list')->setAction(Action::INDEX);
         yield MenuItem::linkTo(ProductCrudController::class, 'Product', 'fa-brands fa-product-hunt')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(CarrierCrudController::class, 'Carrier', 'fa fa-truck')->setAction(Action::INDEX);
     }
 }

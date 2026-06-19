@@ -37,6 +37,8 @@ final class ProductController extends AbstractController
         $form->handleRequest($request);
 
         $products = [];
+        $notProduct = "";
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // dd($search->getCategories());
@@ -45,8 +47,10 @@ final class ProductController extends AbstractController
                 'category' => $search->getCategories()
             ]);
 
+
             if (!$products) {
-                $products = $repo->findAll();
+                // $products = $repo->findAll();
+                $notProduct = "il n'y a pas de produit dans ces categories.";
             }
 
             // foreach ($search->getCategories() as $category) {
@@ -85,6 +89,7 @@ final class ProductController extends AbstractController
         return $this->render('product/index.html.twig', [
             'products' => $products,
             'form' => $form,
+            'notproduct' => $notProduct
         ]);
     }
 

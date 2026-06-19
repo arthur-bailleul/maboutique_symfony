@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau mot de passe{% endblock %}
+
+{% block body %}
+<div class="container py-5" style="max-width: 600px;">
+
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
+        <div class="card-body p-4 p-md-5">
+            <h2 class="h3 fw-semibold mb-2">Choisir un mot de passe</h2>
+            <p class="text-muted small mb-4">
+                Veuillez saisir et confirmer votre nouveau mot de passe de connexion.
+            </p>
+
+            <hr class="text-muted opacity-25 mb-4">
+
+            {{ form_start(resetForm) }}
+                <div class="mb-4 reset-password-form">
+                    {{ form_widget(resetForm.plainPassword) }}
+                </div>
+
+                <button class="btn btn-dark btn-sm w-100 rounded-3 py-2 fw-medium">
+                    Mettre à jour le mot de passe
+                </button>
+            {{ form_end(resetForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

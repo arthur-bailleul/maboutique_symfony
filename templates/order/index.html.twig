@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - Mon compte{% endblock %}
+
+{% block body %}
+
+<div class="container py-5" style="max-width: 900px;">
+
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{{ path('account') }}" class="text-decoration-none text-muted">Mon compte</a></li>
+            <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Mes commandes</li>
+        </ol>
+    </nav>
+
+    <div class="mb-5">
+        <h1 class="h2 fw-semibold mb-1">Mes commandes</h1>
+        <p class="text-muted small mb-0">Retrouvez l'historique et le statut de toutes vos commandes passées.</p>
+    </div>
+
+    {% if app.user.orders is empty %}
+        <div class="card shadow border-0 text-center py-5 rounded-4">
+            <div class="card-body py-4">
+                <div class="fs-1 mb-3 text-muted">📦</div>
+                <h3 class="h5 fw-bold mb-2">Vous n'avez pas encore passé de commande</h3>
+                <p class="text-muted mb-4 mx-auto" style="max-width: 400px;">
+                    Découvrez notre catalogue et laissez-vous tenter par nos produits uniques.
+                </p>
+                <a href="{{ path('products') }}" class="btn btn-dark px-4 rounded-3">
+                    Voir nos produits
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="d-flex flex-column gap-4">
+            {% for order in app.user.orders|reverse %}
+
+                {# Calcul du total de la commande (somme des prix * quantites) + optionnel: prix transporteur #}
+                {% set orderTotal = 0 %}
+                {% for detail in order.orderDetails %}
+                    {% set orderTotal = orderTotal + (detail.price * detail.quantity) %}
+                {% endfor %}
+
+                <div class="card border-0 shadow rounded-4 overflow-hidden">
+
+                    <div class="card-header bg-light border-0 px-4 py-3">
+                        <div class="row align-items-center g-3">
+                            <div class="col-6 col-sm-3">
+                                <span class="text-uppercase text-muted small d-block" style="font-size: 0.75rem; letter-spacing: 0.5px;">Commandé le</span>
+                                <span class="fw-medium text-dark">{{ order.createdAt|date('d/m/Y') }}</span>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <span class="text-uppercase text-muted small d-block" style="font-size: 0.75rem; letter-spacing: 0.5px;">Référence</span>
+                                <span class="fw-medium text-dark text-uppercase">#{{ order.reference|slice(0, 8) }}</span>
+                            </div>
+                            <div class="col-6 col-sm-3">
+                                <span class="text-uppercase text-muted small d-block" style="font-size: 0.75rem; letter-spacing: 0.5px;">Total</span>
+                                <span class="fw-semibold text-dark">{{ orderTotal|number_format(2, ',', ' ') }} €</span>
+                            </div>
+                            <div class="col-6 col-sm-3 text-sm-end">
+                                {% if order.status == 1 %}
+                                    <span class="badge bg-success px-2 py-1.5 rounded-3 fw-normal">Payée</span>
+                                {% elseif order.status == 2 %}
+                                    <span class="badge bg-warning text-dark px-2 py-1.5 rounded-3 fw-normal">En préparation</span>
+                                {% elseif order.status == 3 %}
+                                    <span class="badge bg-info text-dark px-2 py-1.5 rounded-3 fw-normal">Expédiée</span>
+                                {% else %}
+                                    <span class="badge bg-secondary px-2 py-1.5 rounded-3 fw-normal">En attente</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="d-flex flex-column gap-3">
+                            {# On affiche seulement les 3 premiers articles pour ne pas surcharger la liste #}
+                            {% for detail in order.orderDetails|slice(0, 3) %}
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        {# Image du produit relié à OrderDetails #}
+                                        <div class="bg-light rounded-3 overflow-hidden" style="width: 55px; height: 55px;">
+                                            <img src="/uploads/{{ detail.product.image }}"
+                                                 class="w-100 h-100 object-fit-cover"
+                                                 alt="{{ detail.product.name }}">
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0 fw-medium text-dark">{{ detail.product.name }}</h6>
+                                            <span class="text-muted small">Quantité : {{ detail.quantity }}</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-secondary small fw-medium">{{ detail.price|number_format(2, ',', ' ') }} €</span>
+                                </div>
+                            {% endfor %}
+
+                            {# Indicateur s'il y a plus de 3 articles #}
+                            {% if order.orderDetails|length > 3 %}
+                                <p class="text-muted small mb-0 mt-1 italic">
+                                    + {{ order.orderDetails|length - 3 }} autre(s) produit(s) dans cette commande...
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-4 pt-3 border-top border-light-subtle">
+                            <a href="{{ path('account_order_show', { 'reference': order.reference }) }}"
+                               class="btn btn-outline-dark btn-sm px-4 rounded-3 fw-medium">
+                                Voir le détail
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

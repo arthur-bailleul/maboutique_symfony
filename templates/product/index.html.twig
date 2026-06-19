@@ -19,9 +19,14 @@
     {{ form(form)}}
     </div>
     <div class="col-md-9">
+
+{% if notproduct %}
+
+    <div>{{ notproduct }}</div>
+
+{% endif %}
+
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-
 
     {% for product in products %}
 

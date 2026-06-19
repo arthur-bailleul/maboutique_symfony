@@ -89,3 +89,16 @@ symfony console make:admin:crud
 composer require stof/doctrine-extensions-bundle
 
 symfony console doctrine:fixtures:loa
+
+
+# sans le prof
+
+composer require symfony/mailer
+composer require symfony/mailtrap-mailer
+
+
+composer require symfonycasts/reset-password-bundle
+symfony console make:reset-password
+
+
+

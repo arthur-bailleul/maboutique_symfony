@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-mail envoyé{% endblock %}
+
+{% block body %}
+<div class="container py-5" style="max-width: 600px;">
+
+    <div class="card shadow border-0 rounded-4 text-center overflow-hidden">
+        <div class="card-body p-4 p-md-5">
+
+            <div class="mb-4 text-secondary">
+                <span class="display-4 "><i class="fa-solid fa-envelope" style="color: rgb(38, 38, 38);"></i></span>
+            </div>
+
+            <h2 class="h3 fw-semibold mb-3">Lien de récupération envoyé</h2>
+
+            <p class="text-secondary small mb-4 lh-lg">
+                Si un compte correspond à cette adresse e-mail, un message vient de vous être envoyé. Il contient un lien d'accès à usage unique.
+                <br>
+                Ce lien restera valide pendant <strong>{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}</strong>.
+            </p>
+
+            <div class="bg-light rounded-3 p-3 mb-4">
+                <p class="text-muted small mb-0">
+                    Vous ne trouvez pas l'e-mail ? Pensez à vérifier vos dossiers de courriers indésirables (spams).
+                </p>
+            </div>
+
+            <hr class="text-muted opacity-25 my-4">
+
+            <a href="{{ path('forgot_password_request') }}" class="btn btn-outline-dark btn-sm rounded-3 px-4">
+                Réessayer la demande
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

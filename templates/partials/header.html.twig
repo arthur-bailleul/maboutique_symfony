@@ -23,6 +23,9 @@
 
 
       <ul class="navbar-nav">
+        <li class="nav-item d-flex align-items-center me-3">
+            <a class="fa-solid fa-basket-shopping nav-link" href="{{ path('cart') }}" style="color: hsl(0, 0%, 15%);"></a>
+        </li>
         {# 👉 Visible uniquement pour admin #}
         {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item">

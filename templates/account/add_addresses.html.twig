@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer mon adresse - Mon compte{% endblock %}
+
+{% block body %}
+
+<div class="container py-5" style="max-width: 650px;">
+    <!-- Fil d'ariane pour revenir facilement au compte -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('account') }}" class="text-decoration-none">Mon compte</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{ path('account_address') }}" class="text-decoration-none">Mes adresses</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ajouter</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow border-0">
+        <div class="card-body p-4">
+
+            <h2 class="mb-4">
+                {% if is_edit is defined and is_edit %}Modifier mon adresse{% else %}Ajouter une adresse{% endif %}
+            </h2>
+
+            {# Rendu si tu passes une variable Symfony Form #}
+            {% if form is defined %}
+
+                {{ form_start(form) }}
+                    <div class="">{{ form_row(form.name) }}</div>
+                    <div class="row mb-0">
+                        <div class="col-md-6">{{ form_row(form.firstname) }}</div>
+                        <div class="col-md-6">{{ form_row(form.lastname) }}</div>
+                    </div>
+                    <div class="mb-4">{{ form_row(form.company) }}</div>
+                    <div class="mb-4">{{ form_row(form.address) }}</div>
+                    <div class="row mb-0">
+                        <div class="col-md-4">{{ form_row(form.postal) }}</div>
+                        <div class="col-md-8">{{ form_row(form.city) }}</div>
+                    </div>
+                    <div class="">{{ form_row(form.country) }}</div>
+                    <div class="">{{ form_row(form.phone) }}</div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1 shadow-sm">Enregistrer l'adresse</button>
+                        <a href="{{ path('account_address') }}" class="btn btn-dark">Annuler</a>
+                    </div>
+                {{ form_end(form) }}
+
+            {# Rendu HTML brut (si tu n'utilises pas encore le FormBuilder de Symfony) #}
+            {% else %}
+                <form method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Prénom</label>
+                            <input type="text" name="firstname" class="form-control" required value="{{ address.firstname ?? '' }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nom</label>
+                            <input type="text" name="lastname" class="form-control" required value="{{ address.lastname ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Société (Optionnel)</label>
+                        <input type="text" name="company" class="form-control" value="{{ address.company ?? '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Adresse de livraison</label>
+                        <input type="text" name="address" class="form-control" required value="{{ address.address ?? '' }}">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Code postal</label>
+                            <input type="text" name="postal" class="form-control" required value="{{ address.postal ?? '' }}">
+                        </div>
+                        <div class="col-md-8 mb-3">
+                            <label class="form-label">Ville</label>
+                            <input type="text" name="city" class="form-control" required value="{{ address.city ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Pays</label>
+                        <input type="text" name="country" class="form-control" required value="{{ address.country ?? 'France' }}">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" name="phone" class="form-control" required value="{{ address.phone ?? '' }}">
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1 shadow-sm">Enregistrer l'adresse</button>
+                        <a href="{{ path('account_address') }}" class="btn btn-light">Annuler</a>
+                    </div>
+                </form>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
